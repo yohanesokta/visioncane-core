@@ -1,3 +1,4 @@
 node_modules
 .credential-whatsapp
 whatsapp-id.json
+dist

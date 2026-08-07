@@ -1,8 +1,13 @@
 import makeWASocket, { useMultiFileAuthState, WASocket } from "@whiskeysockets/baileys"
 import qrcode from "qrcode-terminal"
-import { saveJsonList } from "./protocols/save.protocol.ts";
+import { saveJsonList } from "./protocols/save.protocol.js";
 
-let whatsappIdList: any = []
+export interface listUserId {
+    id: string,
+    number: string
+}
+
+let whatsappIdList: listUserId[] = []
 let socket: WASocket | null = null;
 const saveIdName = "whatsapp-id.json"
 async function connectToWhatsapp() {
@@ -35,8 +40,8 @@ async function connectToWhatsapp() {
             const whatsappId = events.messages[0]?.key.remoteJid;
             const whatsappNumber = events.messages[0]?.key.remoteJidAlt || "Hidden Number@-"
             whatsappIdList.push({
-                "id": whatsappId,
-                "number": whatsappNumber.split("@")[0]
+                id: whatsappId || "",
+                number: whatsappNumber.split("@")[0] || ""
             })
             saveJsonList(whatsappIdList, saveIdName);
             socket?.sendMessage(whatsappId!, { text: "Okkay Kamu Di Daftarkan Ke List Sender" });

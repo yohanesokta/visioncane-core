@@ -1,16 +1,16 @@
-import { saveIdName, socket } from "./whatsapp.handler.ts";
+import { saveIdName, socket, listUserId } from "./whatsapp.handler.js";
 import "dotenv/config"
 import expres, { response } from "express"
-import { readJsonList } from "./protocols/save.protocol.ts";
+import { readJsonList } from "./protocols/save.protocol.js";
 
 const app = expres();
 const APP_PORT = process.env.APP_PORT || 3000
 
 app.get("/", async (req, response) => {
     if (socket) {
-        const listId = await readJsonList(saveIdName);
-        listId.forEach((user: any, index) => {
-            socket!.sendMessage(user["id"],
+        const listId: listUserId[] = await readJsonList(saveIdName);
+        listId.forEach((user: listUserId, index) => {
+            socket!.sendMessage(user.id,
                 {
                     location: {
                         name: "Test Name",

@@ -26,7 +26,7 @@ function joinPathRoot(fpath: string) {
 }
 
 export async function saveJsonList(
-    data: string[],
+    data: any[],
     filePath: string
 ): Promise<void> {
     const json = JSON.stringify(data, null, 2);

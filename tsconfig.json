@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "moduleResolution": "nodenext",
-    "module": "nodenext",
+    "moduleResolution": "bundler",
+    "module": "esnext",
     "target": "esnext",
     "rootDir": "./src",
     "outDir": "./dist",
@@ -19,8 +19,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "allowImportingTsExtensions": true,
-    "emitDeclarationOnly": true
   },
   "include": [
     "src/**/*"
