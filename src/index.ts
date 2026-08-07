@@ -1,16 +1,37 @@
-import { socket, whatsappId } from "./whatsapp.handler.ts";
-// !INFO : Handler untuk http rest
-// !TODO : Http request dapat trigger ke whatsapp handler
+import { saveIdName, socket } from "./whatsapp.handler.ts";
 import "dotenv/config"
 import expres, { response } from "express"
+import { readJsonList } from "./protocols/save.protocol.ts";
+
 const app = expres();
 const APP_PORT = process.env.APP_PORT || 3000
 
-app.get("/", (req, response) => {
-    if (socket && whatsappId) {
-        socket.sendMessage(whatsappId, { text: "Hallo Mungkin Iki Trigger Dari Button Awokawokawok" });
+app.get("/", async (req, response) => {
+    if (socket) {
+        const listId = await readJsonList(saveIdName);
+        listId.forEach((user: any, index) => {
+            socket!.sendMessage(user["id"],
+                {
+                    location: {
+                        name: "Test Name",
+                        address: "Test Address",
+                        degreesLatitude: -7.125258496857058,
+                        degreesLongitude: 112.71915196294006
+                    }
+                }
+            );
+        })
     }
     response.send("OK");
+})
+
+app.get("/numbers", async (request, response) => {
+    try {
+        const data = await readJsonList(saveIdName);
+        response.json(data);
+    } catch {
+        response.status(500)
+    }
 })
 
 app.listen(APP_PORT, (error: any) => {

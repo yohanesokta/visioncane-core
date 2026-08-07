@@ -1,8 +1,10 @@
 import makeWASocket, { useMultiFileAuthState, WASocket } from "@whiskeysockets/baileys"
 import qrcode from "qrcode-terminal"
+import { saveJsonList } from "./protocols/save.protocol.ts";
 
+let whatsappIdList: any = []
 let socket: WASocket | null = null;
-let whatsappId: string | null | undefined = undefined;
+const saveIdName = "whatsapp-id.json"
 async function connectToWhatsapp() {
     const { state, saveCreds } = await useMultiFileAuthState(".credential-whatsapp");
     socket = makeWASocket({
@@ -30,12 +32,17 @@ async function connectToWhatsapp() {
         const message_text = events.messages[0]?.message?.extendedTextMessage?.text || events.messages[0]?.message?.conversation;
         console.log(`message text: ${message_text}`);
         if (message_text == "/sendme") {
-            whatsappId = events.messages[0]?.key.remoteJid;
-            console.log(`Changing Whatsapp Id to ${whatsappId}`);
-            socket?.sendMessage(whatsappId!, { text: "Ok Sekarang aku akan kirim ke kamu" });
+            const whatsappId = events.messages[0]?.key.remoteJid;
+            const whatsappNumber = events.messages[0]?.key.remoteJidAlt || "Hidden Number@-"
+            whatsappIdList.push({
+                "id": whatsappId,
+                "number": whatsappNumber.split("@")[0]
+            })
+            saveJsonList(whatsappIdList, saveIdName);
+            socket?.sendMessage(whatsappId!, { text: "Okkay Kamu Di Daftarkan Ke List Sender" });
         }
     })
 }
 
 connectToWhatsapp();
-export { whatsappId, socket }
+export { socket, saveIdName }
