@@ -1,0 +1,30 @@
+{
+  "name": "visioncane-core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:yohanesokta/visioncane-core.git",
+  "author": "yohanesokta <yohanesoktayt72@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.2.0",
+    "@types/pino": "^7.0.5",
+    "@types/qrcode-terminal": "^0.12.2",
+    "tsx": "^4.23.11",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.0.0-rc14",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jimp": "0.16.1",
+    "pino": "^10.3.1",
+    "qrcode-terminal": "^0.12.0"
+  }
+}
